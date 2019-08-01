@@ -11,12 +11,18 @@ public class No12933 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		long n = 118372;
-		System.out.println(solution(n));
+		long n = 900000000;
+		long t = 1983619258; // 에러
+		long m = 999999999;
+		long k = 410065408;
+		System.out.println(solution(k));
 	}
 	
 	public static long solution(long n) {
 		long answer = 0;
+		// 1999999999
+		if(n > 2000000000) return answer;
+		
 		// 이거 많이 쓰길래 나도 써봄.
 		// Returns the string representation of the long argument.
 		String s = String.valueOf(n);
@@ -30,16 +36,17 @@ public class No12933 {
 		
 		// 정렬 -> 역순
 		Arrays.sort(nString);
-		
-//		for(int i = nString.length - 1; i >= 0 ; i--) {
-//			System.out.print(nString[i]);
-//		}
+		for(int i = nString.length - 1; i >= 0 ; i--) {
+			System.out.print(nString[i]);
+		}
+		System.out.println();
 		
 		int multip = 1;
 		int tempNum = 0;
 		for(int i = 0; i < nString.length; i++) {
-			tempNum = nString[i] - '0';
-			answer += tempNum * multip;
+			tempNum = (nString[i] - '0') * multip;
+			System.out.println("tempNum: " + tempNum);
+			answer += tempNum;
 			multip *= 10;
 		}
 		
