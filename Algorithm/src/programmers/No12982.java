@@ -6,7 +6,7 @@ import java.util.List;
 
 public class No12982 {
 	public static void main(String[] args) {
-		int[] d = {1,3,2,5,4};
+		int[] d = {9, 1, 1, 1, 1, 1};
 		int budget = 9;
 		System.out.println(solution(d, budget));
 	}
@@ -29,14 +29,16 @@ public class No12982 {
 			}
 		}
 
+		System.out.println("1st cost: " + cost + " / i: " + i);
 		i--;
 		// 더하기 전엔 예산보다 작은 경우 가장 큰 인덱스 값이랑 비교
 		// lastIdx: ArrayList에 넣은 마지막 값. 최적화 할 값.
 		int lastIdx = canditate.get(i);
 		int maxRangeIdx = d.length;
 		
-		while(i > 0 || cost < budget) {
-			
+		while(i > 0 && cost < budget) {
+
+//			System.out.println("last idx: " + lastIdx + " / maxRangeIdx: " + maxRangeIdx);
 			for(int j = lastIdx + 1; j < maxRangeIdx; j++) {
 				// 현재까지 더한 값에서 제일 큰 값을 빼고 그 다음으로 큰 값을 더했을때 예산을 넘지 않으면 그 값으로 대체
 				if(cost - d[j - 1] + d[j] <= budget) {
@@ -44,7 +46,10 @@ public class No12982 {
 					canditate.add(j);
 					cost = cost - d[j - 1] + d[j];
 				}
-				else { break; }
+				else { 
+					System.out.println("break");
+					break; 
+				}
 			}
 			
 			i--;
