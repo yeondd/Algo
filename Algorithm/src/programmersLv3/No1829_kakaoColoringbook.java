@@ -1,89 +1,108 @@
 package programmersLv3;
 
-import java.util.ArrayList;
+import java.util.Stack;
+
+class Node {
+	private int i;
+	private int j;
+	
+	public Node(int i, int j) {
+		this.i = i;
+		this.j = j;
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public int getJ() {
+		return j;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
+}
 
 public class No1829_kakaoColoringbook {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int m = 6;
+		int m = 4;
 		int n = 4;
-		int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+		int[][] picture = {{1,1,1,1}, {1,0,0,0}, {0,0,1,0}, {0,0,0,0}};
+//		int[][] picture = {{0, 0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}, {0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0}};
+//		int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
 		int[] answer = solution(m, n, picture);
-//		System.out.println(answer[0]);
-//		System.out.println(answer[1]);
-	}
-	static int area = 0;
-	
-	public static void check(int i, int j, int[][] picture, boolean[][] visited) {
-		int rowLimit = picture.length;
-		int columnLimit = picture[0].length;
-
-		// 해당 인덱스일 때, 우측 체크
-		if (!visited[i][j] && i < rowLimit - 1 && j < columnLimit - 1) {
-			System.out.printf("%d, %d-> visited? %b\n", i, j, visited[i][j]);
-			
-			  if(picture[i][j] == picture[i][j + 1]) {
-				  System.out.println("\t우 - 일치");
-				  area++;
-				  visited[i][j] = true;
-					
-				  check(i, j + 1, picture, visited);
-			  }
-			  
-			  // 아래 체크
-			  if(picture[i][j] == picture[i + 1][j]) {
-				  System.out.println("\t하 - 일치");
-				  area++;
-				  visited[i][j] = true;
-				  check(i + 1, j, picture, visited);
-			  }
-			  
-			  // 좌측 체크
-			  if(j > 0 && picture[i][j] == picture[i][j - 1]) {
-				  System.out.printf("\t좌(%d, %d) - 일치\n", i , j - 1);
-				  area++;
-				  visited[i][j] = true;
-				  check(i, j - 1, picture, visited);
-			  }
-			  
-			  // 위 체크
-			  if(i > 0 && i > 0 && picture[i][j] == picture[i - 1][j]) {
-				  System.out.println("\t상 - 일치");
-				  area++;
-				  visited[i][j] = true;
-				  check(i - 1, j, picture, visited);
-			  }
-			  
-			  {
-				System.out.println(i + ", " + j + " *** out");
-			  }
-		} 
-		
-		else {
-			System.out.println("\t" + i + ", " + j + "는 이미 방문");
-			return;
-		}
+		System.out.println(answer[0] + ", " + answer[1]);
 	}
 
 	public static int[] solution(int m, int n, int[][] picture) {
 	      int numberOfArea = 0;
 	      int maxSizeOfOneArea = 0;
-	      int[] colorCheck = new int[n];
-	      boolean[][] check = new boolean[m][n];
-	      int tempArea = 0;
-
-		  
-//	      ArrayList<Integer> colorCheck = new ArrayList<Integer>();
+	      int area = 0;
+	      
+	      boolean[][] visited = new boolean[m][n];
+	      Stack<Node> stack = new Stack<Node>();
 	      
 	      for(int i = 0; i < m; i++) {
 	    	  for(int j = 0; j < n; j++) {
-		    	  System.out.println();
-	    		  if(!check[i][j] && picture[i][j] != 0) check(i, j, picture, check);
+	    		  
+	    		  if(stack.isEmpty()) {
+	    			  if(picture[i][j] != 0 && !visited[i][j]) {
+		    			  numberOfArea++;
+		    			  stack.push(new Node(i, j));
+		    			  visited[i][j] = true;
+		    			  
+		    			  if(maxSizeOfOneArea < area) {
+		    				  maxSizeOfOneArea = area;
+		    			  }
+		    			  
+		    			  area = 0;
+	    			  }
+	    			  else {
+	    				  continue;
+	    			  }
+	    		  }
+	    		  
+	    		  Node node = stack.pop();
+	    		  System.out.println(">>>> POP > " + node.getI() + ", " + node.getJ());
+	    		  int row = node.getI();
+	    		  int column = node.getJ();
+	    		  area++;
+	    		  
+	    		  // 상
+	    		  if(row - 1 >= 0 && picture[row][column] == picture[row - 1][column] && !visited[row - 1][column]) {
+	    			  System.out.println("PUSH > " + (row - 1) + ", " + column);
+	    			  stack.push(new Node(row - 1, column));
+	    			  visited[row - 1][column] = true;
+	    		  }
+	    		  // 하
+	    		  if(row + 1 <= m - 1 && picture[row][column] == picture[row + 1][column] && !visited[row + 1][column]) {
+	    			  System.out.println("PUSH > " + (row + 1) + ", " + column);
+	    			  stack.push(new Node(row + 1, column));
+	    			  visited[row + 1][column] = true;
+	    		  }
+	    		  // 좌
+	    		  if(column - 1 >= 0 && picture[row][column] == picture[row][column - 1] && !visited[row][column - 1]) {
+	    			  System.out.println("PUSH > " + row + ", " + (column - 1));
+	    			  stack.push(new Node(row, column - 1));
+	    			  visited[row][column - 1] = true;
+	    		  }
+	    		  // 우
+	    		  if(column + 1 <= n - 1 && picture[row][column] == picture[row][column + 1] && !visited[row][column + 1]) {
+	    			  System.out.println("PUSH > " + row + ", " + (column + 1));
+	    			  stack.push(new Node(row, column + 1));
+	    			  visited[row][column + 1] = true;
+	    		  }
 	    	  }
-	    	  System.out.println(">>>> out");
 	      }
 	      
+	      if(numberOfArea == 1) maxSizeOfOneArea = area;
 	      int[] answer = new int[2];
 	      answer[0] = numberOfArea;
 	      answer[1] = maxSizeOfOneArea;
