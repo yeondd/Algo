@@ -22,8 +22,9 @@ public class No12954 {
 		if(n > 1000) return answer;
 		else answer = new long[n];
 		
-		for(int i = 0; i < n; i++) {
-			answer[i] = x * (i + 1);
+		answer[0] = x;
+		for(int i = 1; i < n; i++) {
+			answer[i] = answer[i - 1] + x;
 		}
 		
 	    return answer;
