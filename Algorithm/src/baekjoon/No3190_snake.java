@@ -7,8 +7,8 @@ import java.util.Scanner;
  */
 
 class Tuple {
-	private int x; // Çà
-	private int y; // ¿­
+	private int x; // ï¿½ï¿½
+	private int y; // ï¿½ï¿½
 	private char c;
 	
 	public Tuple(int x, int y) {
@@ -44,6 +44,25 @@ class Tuple {
 	public void setC(char c) {
 		this.c = c;
 	}
+	
+	public void changeDirection(int flag) {
+		if(flag == 0) {
+			this.x += 0;
+			this.y += 1;
+		}
+		else if(flag == 1) {
+			this.x += 1;
+			this.y += 0;
+		}
+		else if(flag == 2) {
+			this.x += 0;
+			this.y += -1;
+		}
+		else if(flag == 3) {
+			this.x += -1;
+			this.y += 0;
+		}
+	}
 }
 
 public class No3190_snake {
@@ -56,15 +75,15 @@ public class No3190_snake {
 		int k = scan.nextInt();
 		int[][] board = new int[n][n];
 		
-		// »ç°ú À§Ä¡ ÁöÁ¤
+		// ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 		for(int i = 0; i < k; i++) {
-			int x = scan.nextInt();
-			int y = scan.nextInt();
+			int x = scan.nextInt() - 1;
+			int y = scan.nextInt() - 1;
 
 			board[x][y] = 1;
 		}
 		
-		// ¹æÇâ º¯È¯
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 		// L - left
 		// D - right;
 		int L = scan.nextInt();
@@ -75,7 +94,7 @@ public class No3190_snake {
 			direction[i] = new Tuple(x, c);
 		}
 
-		// Ã³À½ ¹ìÀ§ À§Ä¡
+		// Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 //		board[0][0] = 2;
 		Tuple head = new Tuple(0, 0);
 		Tuple tail = new Tuple(0, 0);
@@ -87,48 +106,60 @@ public class No3190_snake {
 		int nowHeadCol = head.getY();
 		int nowTailRow = tail.getX();
 		int nowTailCol = tail.getY();
+		int turnFlag = 0;
 		
-		while(nowHeadRow < n -1 && nowHeadCol < n - 1 && nowTailRow < n -1 && nowTailCol < n - 1) {
-			time++;
+		while(nowHeadRow < n && nowHeadCol < n && nowTailRow < n && nowTailCol < n) {
+			System.out.printf("Time >> %d \n", time);
 			
-			// ¸Ó¸®¸¦ ´ÙÀ½ Ä­À¸·Î ÀÌµ¿
-			head.setY(nowHeadCol++);
+			/*
+			 * ì´ë™ë°©í–¥ ë””í´íŠ¸: ì—´ ì¦ê°€
+			 * Dë¥¼ ë§Œë‚˜ë©´: í–‰ ì¦ê°€ -> ì—´ ê°ì†Œ -> í–‰ ê°ì†Œ -> ì—´ ì¦ê°€
+			 * Lì„ ë§Œë‚˜ë©´: í–‰ ê°ì†Œ -> ì—´ ê°ì†Œ -> í–‰ ì¦ê°€ -> ì—´ ì¦ê°€
+			 */
 			
-			// »ç°ú°¡ ¸Ó¸® ÂÊ¿¡ ÀÖÀ¸¸é
-			if(board[nowHeadRow][nowHeadCol] == 1) {
-				// »ç°ú¸¦ ¾ø¾Ö°í
-				board[nowHeadRow][nowHeadCol] = 0;
-				// ²¿¸®´Â ±×´ë·Î
-			} else {
-				// »ç°ú°¡ ¾øÀ¸¸é ²¿¸®µµ ´ÙÀ½ Ä­À¸·Î ÀÌµ¿
-				tail.setY(nowTailCol++);
-			}
-			
-			// ¹æÇâ ÀüÈ¯
-			if(time == direction[directionIdx].getX()) {
+			if(directionIdx < direction.length && time == direction[directionIdx].getX()) {
+				System.out.println("direction Idx: " + directionIdx + " >> " + direction[directionIdx].getX());
 				if(direction[directionIdx].getC() == 'D') {
-					nowHeadRow++; /////// <- ¹ì ±æÀÌ°¡ 1 ÀÌ»óÀÏ¶§ ¹æÇâ ¹Ù²î¸é???
+					turnFlag = (turnFlag + 1) % 4;
 				} else if (direction[directionIdx].getC() == 'L') {
-					nowHeadRow--;
+					turnFlag = (turnFlag + 3) % 4;
 				}
-				
-				head.setX(nowHeadRow);
-				tail.setX(nowTailRow);
 				directionIdx++;
 			}
-		}
-		
-
-//-------------------------------------------------------------------------------------------------
-		board[nowHeadRow][nowHeadCol] = 2;
-		board[nowTailRow][nowTailCol] = 2;
-		
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n; j++) {
-				System.out.print(board[i][j] + " ");
+			
+			head.changeDirection(turnFlag);
+			// ì‚¬ê³¼ê°€ ë¨¸ë¦¬ ìª½ì— ìˆìœ¼ë©´
+			if(board[nowHeadRow][nowHeadCol] == 1) {
+				// ì‚¬ê³¼ë¥¼ ì—†ì• ê³ 
+				board[nowHeadRow][nowHeadCol] = 0;
+				// ê¼¬ë¦¬ëŠ” ê·¸ëŒ€ë¡œ
+			} else {
+				// ì‚¬ê³¼ê°€ ì—†ìœ¼ë©´ ê¼¬ë¦¬ë„ ë‹¤ìŒ ì¹¸ìœ¼ë¡œ ì´ë™
+				tail.changeDirection(turnFlag);
 			}
-			System.out.print("\n");
+
+			System.out.printf("\thead) %d %d\n", head.getX(), head.getY());
+			System.out.printf("\ttail) %d %d\n", tail.getX(), tail.getY());
+			
+			nowHeadRow = head.getX();
+			nowHeadCol = head.getY();
+			nowTailRow = tail.getX();
+			nowTailCol = tail.getY();
+
+			time++;
+			
 		}
+		
+//-------------------------------------------------------------------------------------------------
+//		board[nowHeadRow--][nowHeadCol--] = 2;
+//		board[nowTailRow--][nowTailCol--] = 2;
+		
+//		for(int i = 0; i < n; i++) {
+//			for(int j = 0; j < n; j++) {
+//				System.out.print(board[i][j] + " ");
+//			}
+//			System.out.print("\n");
+//		}
 		
 		System.out.println(time);
 	}
