@@ -32,11 +32,19 @@ public class No1829_kakaoColoringbook {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		int m = 5;
 		int n = 10;
 		int[][] picture = { { 1, 1, 1, 0, 0, 0, 0, 1, 1, 1 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 2, 1, 1, 1, 1, 2, 1 }, { 1, 1, 2, 1, 2, 1, 1, 2, 1, 2 } };;
 //		int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+=======
+		int m = 6;
+		int n = 4;
+//		int[][] picture = {{1,1,1,1}, {1,0,0,0}, {0,0,1,0}, {0,0,0,0}};
+//		int[][] picture = {{0, 0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}, {0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0}};
+		int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+>>>>>>> 9322067875259e4d00f995261ec28d1959021f4c
 		int[] answer = solution(m, n, picture);
 		System.out.println(answer[0] + ", " + answer[1]);
 	}
@@ -63,6 +71,7 @@ public class No1829_kakaoColoringbook {
 	    			  if(maxSizeOfOneArea < area) {
 	    				  maxSizeOfOneArea = area;
 	    			  }
+<<<<<<< HEAD
 	    			  
 	    			  area = 0;
     			  }
@@ -100,6 +109,42 @@ public class No1829_kakaoColoringbook {
 		    			  stack.push(new Node(row, column + 1));
 		    			  visited[row][column + 1] = true;
 		    		  }
+=======
+	    			  else {
+	    				  continue;
+	    			  }
+	    		  }
+	    		  
+	    		  Node node = stack.pop();
+	    		  System.out.println(">>>> POP > " + node.getI() + ", " + node.getJ());
+	    		  int row = node.getI();
+	    		  int column = node.getJ();
+	    		  area++;
+	    		  
+	    		  // ��
+	    		  if(row - 1 >= 0 && picture[row][column] == picture[row - 1][column] && !visited[row - 1][column]) {
+	    			  System.out.println("PUSH > " + (row - 1) + ", " + column);
+	    			  stack.push(new Node(row - 1, column));
+	    			  visited[row - 1][column] = true;
+	    		  }
+	    		  // ��
+	    		  if(row + 1 <= m - 1 && picture[row][column] == picture[row + 1][column] && !visited[row + 1][column]) {
+	    			  System.out.println("PUSH > " + (row + 1) + ", " + column);
+	    			  stack.push(new Node(row + 1, column));
+	    			  visited[row + 1][column] = true;
+	    		  }
+	    		  // ��
+	    		  if(column - 1 >= 0 && picture[row][column] == picture[row][column - 1] && !visited[row][column - 1]) {
+	    			  System.out.println("PUSH > " + row + ", " + (column - 1));
+	    			  stack.push(new Node(row, column - 1));
+	    			  visited[row][column - 1] = true;
+	    		  }
+	    		  // ��
+	    		  if(column + 1 <= n - 1 && picture[row][column] == picture[row][column + 1] && !visited[row][column + 1]) {
+	    			  System.out.println("PUSH > " + row + ", " + (column + 1));
+	    			  stack.push(new Node(row, column + 1));
+	    			  visited[row][column + 1] = true;
+>>>>>>> 9322067875259e4d00f995261ec28d1959021f4c
 	    		  }
 	    	  }
 	      }
