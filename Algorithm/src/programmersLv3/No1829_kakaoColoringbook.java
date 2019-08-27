@@ -31,14 +31,13 @@ class Node {
 public class No1829_kakaoColoringbook {
 
 	public static void main(String[] args) {
-		int m = 5;
-		int n = 10;
-		int[][] picture = { { 1, 1, 1, 0, 0, 0, 0, 1, 1, 1 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 2, 1, 1, 1, 1, 2, 1 }, { 1, 1, 2, 1, 2, 1, 1, 2, 1, 2 } };;
-
-//		int[][] picture = {{1,1,1,1}, {1,0,0,0}, {0,0,1,0}, {0,0,0,0}};
+		int m = 6;
+		int n = 4;
+//		int[][] picture = { { 1, 1, 1, 0, 0, 0, 0, 1, 1, 1 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
+//        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 2, 1, 1, 1, 1, 2, 1 }, { 1, 1, 2, 1, 2, 1, 1, 2, 1, 2 } };;
 //		int[][] picture = {{0, 0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}, {0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0}};
 //		int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+		int[][] picture = {{ 1, 1, 1, 0 }, { 1, 1, 0, 0 }, { 0, 0, 0, 1 }, { 0, 0, 0, 1 }, { 3, 3, 3, 1 }, { 3, 3, 3, 1 }};
 
 		int[] answer = solution(m, n, picture);
 		System.out.println(answer[0] + ", " + answer[1]);
@@ -76,7 +75,6 @@ public class No1829_kakaoColoringbook {
     			  // 스택에 처음 들어간 값을 시작으로 이어지는 모든 노드들을 스택에 넣고 빼면서 영역확인
 	    		  while (!stack.isEmpty()) {
 	    			  Node node = stack.pop();
-	    			  // pop한 노드는 이미 한 번 방문한 노드이자 현재 위치이므로 영역 증가
 		    		  area++;
 //		    		  System.out.println(">>>> POP > " + node.getI() + ", " + node.getJ());
 		    		  int row = node.getI();
