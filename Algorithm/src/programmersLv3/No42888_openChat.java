@@ -3,9 +3,11 @@ package programmersLv3;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /*
- * ¿ÀÇÂ Ã¤ÆÃ¹æ
+ * ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½Ã¹ï¿½
  * https://programmers.co.kr/learn/courses/30/lessons/42888
  */
 
@@ -17,28 +19,77 @@ class Tuple {
 		this.key = k;
 		this.value = v;
 	}
+	
+	public String toString() {
+		return key + " " + value;
+	}
 }
 
 public class No42888_openChat {
 
 	public static void main(String[] args) {
-		String[] record = {"Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo", "Leave uid1234","Change uid4567 Ryan"};
-		String[] answer = solution(record);
+		String[] record = {"Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"};
+		String[] answer = solutionArr(record);
+//		for(String str: answer) {
+//			System.out.println(str);
+//		}
+		
+		answer = solution(record);
 		for(String str: answer) {
 			System.out.println(str);
 		}
 	}
 	
 	public static String[] solution(String[] record) {
+		String[] answer = {};
+		int size = record.length;
+		HashMap set = new HashMap();
+        String[][] table = new String[size][3];
+        ArrayList<String> finAnswerArr = new ArrayList<String>();
+        
+        for(int i = 0; i < size; i++) {
+        	String[] temp = record[i].split(" ");
+        	for(int j = 0; j < temp.length; j++) {
+        		table[i][j] = temp[j];
+        	}
+
+            if(table[i][0].compareTo("Leave") != 0) {
+	    		set.put(table[i][1], table[i][2]);
+            }
+        }
+        
+        String answerStr = "";
+        for(int i = 0; i < size; i++) {
+        	if(table[i][0].equals("Enter")) {
+        		answerStr = "ë‹˜ì´ ë“¤ì–´ì™”ìŠµë‹ˆë‹¤.";
+        		answerStr = (String) set.get(table[i][1]) + answerStr;
+            	finAnswerArr.add(answerStr);
+        	}
+        	else if(table[i][0].equals("Leave")) {
+        		answerStr = "ë‹˜ì´ ë‚˜ê°”ìŠµë‹ˆë‹¤.";
+        		answerStr = (String) set.get(table[i][1]) + answerStr;
+            	finAnswerArr.add(answerStr);
+        	}
+        	else if(table[i][0].equals("Change")) {
+        		
+        	}
+        	
+        }
+        
+        answer = finAnswerArr.toArray(new String[finAnswerArr.size()]);
+		return answer;
+	}
+	
+	public static String[] solutionArr(String[] record) {
         String[] answer = {};
         int size = record.length;
-        // record¸¦ ´Ü¾î / À¯Àú¾ÆÀÌµð / ´Ð³×ÀÓ À¸·Î º¯°æÇÏ±â À§ÇÑ ¹è¿­
+        // recordï¿½ï¿½ ï¿½Ü¾ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ / ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
         String[][] table = new String[size][3];
-        // À§ ¹è¿­À» uid¼ø¼­´ë·Î Á¤·ÄÇØ¼­ ÀúÀåÇÒ ¹è¿­
+        // ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ uidï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
         String[][] SortedTable = new String[size][3];
         ArrayList<String> finAnswerArr = new ArrayList<String>();
         
-        // ´Ü¾î º°·Î ÀúÀå
+        // ï¿½Ü¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for(int i = 0; i < size; i++) {
         	String[] temp = record[i].split(" ");
         	for(int j = 0; j < temp.length; j++) {
@@ -56,7 +107,7 @@ public class No42888_openChat {
             }
         });
         
-        // ÃÖÁ¾ º¯°æµÈ ´Ð³×ÀÓÀ» uidº°·Î ÀúÀåÇÏ±â À§ÇÑ arraylist
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ uidï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ arraylist
         ArrayList<Tuple> al = new ArrayList<Tuple>();
         
         String uid = table[0][1];
@@ -80,35 +131,39 @@ public class No42888_openChat {
         }
         al.add(new Tuple(uid, userName));
         
-        idx = 0;
-        for(int i = 0; i < size; i++) {
-        	String finAnswer = "";
+		for(int j = 0; j < al.size(); j++) {
+    		String tempUid = al.get(j).key;
+    		String tempUserName = al.get(j).value;
+    		
+            for(int i = 0; i < size; i++) {
+            	if(table[i][1].equals(tempUid)) {
+            		table[i][2] = tempUserName;
+            	}
+            }
+		}
 
-    		switch(table[i][0]) {
-    		case "Enter":
-    			finAnswer = "´ÔÀÌ µé¾î¿Ô½À´Ï´Ù.";
-    			break;
-    			
-    		case "Leave":
-    			finAnswer = "´ÔÀÌ ³ª°¬½À´Ï´Ù.";
-    			break;
-    			
-    		case "Change":
-    			break;
-    		}
+		idx = 0;
+		while(idx < size) {
+			String finAnswer = "";
 
-        	if(table[i][1].equals(al.get(idx).key)) {
-        		table[i][2] = al.get(idx).value;
+        	if(table[idx][0].equals("Enter")) {
+        		finAnswer = "ë‹˜ì´ ë“¤ì–´ì™”ìŠµë‹ˆë‹¤.";
+            	finAnswer = table[idx][2] + finAnswer;
+            	finAnswerArr.add(finAnswer);
+        		idx++;
         	}
-        	else {
+        	else if(table[idx][0].equals("Leave")) {
+        		finAnswer = "ë‹˜ì´ ë‚˜ê°”ìŠµë‹ˆë‹¤.";
+            	finAnswer = table[idx][2] + finAnswer;
+            	finAnswerArr.add(finAnswer);
+        		idx++;
+        	}
+        	else if(table[idx][0].equals("Change")) {
         		idx++;
         	}
         	
-        	finAnswer = table[i][2] + finAnswer;
-        	finAnswerArr.add(finAnswer);
-        }
-        
-        answer = (String[]) finAnswerArr.toArray();
+		}
+		answer = finAnswerArr.toArray(new String[finAnswerArr.size()]);
         
         return answer;
     }
