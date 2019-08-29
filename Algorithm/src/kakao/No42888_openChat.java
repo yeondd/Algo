@@ -1,4 +1,4 @@
-package programmersLv3;
+package kakao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /*
- * ì˜¤í”ˆì±„íŒ…ë°©
+ * ?˜¤?”ˆì±„íŒ…ë°?
  * https://programmers.co.kr/learn/courses/30/lessons/42888
  */
 
@@ -61,12 +61,12 @@ public class No42888_openChat {
         String answerStr = "";
         for(int i = 0; i < size; i++) {
         	if(table[i][0].equals("Enter")) {
-        		answerStr = "ë‹˜ì´ ë“¤ì–´ì™”ìŠµë‹ˆë‹¤.";
+        		answerStr = "?‹˜?´ ?“¤?–´?™”?Šµ?‹ˆ?‹¤.";
         		answerStr = (String) set.get(table[i][1]) + answerStr;
             	finAnswerArr.add(answerStr);
         	}
         	else if(table[i][0].equals("Leave")) {
-        		answerStr = "ë‹˜ì´ ë‚˜ê°”ìŠµë‹ˆë‹¤.";
+        		answerStr = "?‹˜?´ ?‚˜ê°”ìŠµ?‹ˆ?‹¤.";
         		answerStr = (String) set.get(table[i][1]) + answerStr;
             	finAnswerArr.add(answerStr);
         	}
@@ -83,13 +83,13 @@ public class No42888_openChat {
 	public static String[] solutionArr(String[] record) {
         String[] answer = {};
         int size = record.length;
-        // recordå ì™ì˜™ å ìŒ¤ì–µì˜™ / å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì‹±ë“¸ì˜™ / å ì‹»ë†‚ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì‹¹ê¹ì˜™ å ì™ì˜™å ì™ì˜™ å ì¼ì—´
+        // record? ?™?˜™ ? ?Œ¤?–µ?˜™ / ? ?™?˜™? ?™?˜™? ?™?˜™? ?‹±?“¸?˜™ / ? ?‹»?†‚?˜™? ?™?˜™ ? ?™?˜™? ?™?˜™ ? ?™?˜™? ?™?˜™? ?‹¹ê¹ì˜™ ? ?™?˜™? ?™?˜™ ? ?¼?—´
         String[][] table = new String[size][3];
-        // å ì™ì˜™ å ì¼ì—´å ì™ì˜™ uidå ì™ì˜™å ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™å ìŒ”ì‡½ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì¼ì—´
+        // ? ?™?˜™ ? ?¼?—´? ?™?˜™ uid? ?™?˜™? ?™?˜™? ?™?˜™? ï¿? ? ?™?˜™? ?™?˜™? ?Œ”?‡½?˜™ ? ?™?˜™? ?™?˜™? ?™?˜™ ? ?¼?—´
         String[][] SortedTable = new String[size][3];
         ArrayList<String> finAnswerArr = new ArrayList<String>();
         
-        // å ìŒ¤ì–µì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
+        // ? ?Œ¤?–µ?˜™ ? ?™?˜™? ?™?˜™ ? ?™?˜™? ?™?˜™
         for(int i = 0; i < size; i++) {
         	String[] temp = record[i].split(" ");
         	for(int j = 0; j < temp.length; j++) {
@@ -107,7 +107,7 @@ public class No42888_openChat {
             }
         });
         
-        // å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ï¿½ å ì‹»ë†‚ì˜™å ì™ì˜™å ì™ì˜™ uidå ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì‹¹ê¹ì˜™ å ì™ì˜™å ì™ì˜™ arraylist
+        // ? ?™?˜™? ?™?˜™ ? ?™?˜™? ?™?˜™? ï¿? ? ?‹»?†‚?˜™? ?™?˜™? ?™?˜™ uid? ?™?˜™? ?™?˜™ ? ?™?˜™? ?™?˜™? ?‹¹ê¹ì˜™ ? ?™?˜™? ?™?˜™ arraylist
         ArrayList<Tuple> al = new ArrayList<Tuple>();
         
         String uid = table[0][1];
@@ -153,7 +153,7 @@ public class No42888_openChat {
         		idx++;
         	}
         	else if(table[idx][0].equals("Leave")) {
-        		finAnswer = "ï¿½ë–‚ï¿½ì”  ï¿½êµ¹åª›ë¶¿ë’¿ï¿½ë•²ï¿½ë–.";
+        		finAnswer = "ï¿½ë–‚ï¿½ì”  ï¿½êµ¹åª›ë¶¿?’¿ï¿½ë•²ï¿½ë–.";
             	finAnswer = table[idx][2] + finAnswer;
             	finAnswerArr.add(finAnswer);
         		idx++;
