@@ -1,5 +1,12 @@
 package programmersLv3;
 
+/*
+ * 카카오 프렌즈 컬러링북
+ * https://programmers.co.kr/learn/courses/30/lessons/1829
+ */
+
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 class Node {
@@ -36,14 +43,84 @@ public class No1829_kakaoColoringbook {
 //		int[][] picture = { { 1, 1, 1, 0, 0, 0, 0, 1, 1, 1 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
 //        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 2, 1, 1, 1, 1, 2, 1 }, { 1, 1, 2, 1, 2, 1, 1, 2, 1, 2 } };;
 //		int[][] picture = {{0, 0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}, {0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0}};
-//		int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
-		int[][] picture = {{ 1, 1, 1, 0 }, { 1, 1, 0, 0 }, { 0, 0, 0, 1 }, { 0, 0, 0, 1 }, { 3, 3, 3, 1 }, { 3, 3, 3, 1 }};
+		int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+//		int[][] picture = {{ 1, 1, 1, 0 }, { 1, 1, 0, 0 }, { 0, 0, 0, 1 }, { 0, 0, 0, 1 }, { 3, 3, 3, 1 }, { 3, 3, 3, 1 }};
 
-		int[] answer = solution(m, n, picture);
+//		int[] answer = solutionDFS(m, n, picture);
+//		System.out.println(answer[0] + ", " + answer[1]);
+
+		int[] answer = solutionBFS(m, n, picture);
 		System.out.println(answer[0] + ", " + answer[1]);
 	}
+	
+	public static int[] solutionBFS(int m, int n, int[][] picture) {
+		int area = 0;
+		int numberOfArea = 0;
+	    int maxSizeOfOneArea = 0;
+		Queue<Node> queue = new LinkedList<Node>();
+		boolean[][] visited = new boolean[m][n];
 
-	public static int[] solution(int m, int n, int[][] picture) {
+		for(int i = 0; i < m; i++) {
+			for(int j = 0; j < n; j++) {
+				if(visited[i][j]) {
+					continue;
+				}
+				
+				if(queue.isEmpty()) {
+					if(picture[i][j] != 0 && !visited[i][j]) {
+						System.out.printf("%d, %d) %d\n", i, j, picture[i][j]);
+						queue.offer(new Node(i, j));
+						visited[i][j] = true;
+						
+						if(maxSizeOfOneArea < area) {
+							maxSizeOfOneArea = area;
+		    			}
+						
+						area = 0;
+						numberOfArea++;
+					}
+				}
+				
+				while(!queue.isEmpty()) {
+					Node temp = queue.poll();
+					int row = temp.getI();
+					int col = temp.getJ();
+					area++;
+					System.out.printf("POP %d, %d) \n", row, col);
+					
+					// 인접 노드 모두 넣기
+					if(row - 1 >= 0 && picture[row][col] == picture[row - 1][col] && !visited[row - 1][col]) {
+//						System.out.printf("push %d, %d) %d\n", i, j, picture[i - 1][j]);
+						queue.offer(new Node(row - 1, col));
+						visited[row - 1][col] = true;
+					}
+					if(col + 1 < n && picture[row][col] == picture[row][col + 1] && !visited[row][col + 1]) {
+//						System.out.printf("push %d, %d) %d\n", i, j, picture[i - 1][j]);
+						queue.offer(new Node(row, col + 1));
+						visited[row][col + 1] = true;
+					}
+					if(row + 1 < m && picture[row][col] == picture[row + 1][col] && !visited[row + 1][col]) {
+//						System.out.printf("push %d, %d) %d\n", i, j, picture[i - 1][j]);
+						queue.offer(new Node(row + 1, col));
+						visited[row + 1][col] = true;
+					}
+					if(col - 1 >= 0 && picture[row][col] == picture[row][col - 1] && !visited[row][col - 1]) {
+//						System.out.printf("push %d, %d) %d\n", i, j, picture[i - 1][j]);
+						queue.offer(new Node(row, col - 1));
+						visited[row][col - 1] = true;
+					}
+				}
+			}
+		}
+		
+		int[] answer = new int[2];
+		answer[0] = numberOfArea;
+		answer[1] = maxSizeOfOneArea;
+		
+		return answer;
+	}
+
+	public static int[] solutionDFS(int m, int n, int[][] picture) {
 	      int numberOfArea = 0;
 	      int maxSizeOfOneArea = 0;
 	      int area = 0;
