@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /*
- * ���� ä�ù�
+ * 오픈채팅방
  * https://programmers.co.kr/learn/courses/30/lessons/42888
  */
 
@@ -43,7 +43,7 @@ public class No42888_openChat {
 	public static String[] solution(String[] record) {
 		String[] answer = {};
 		int size = record.length;
-		HashMap set = new HashMap();
+		HashMap<String, String> set = new HashMap<String, String>();
         String[][] table = new String[size][3];
         ArrayList<String> finAnswerArr = new ArrayList<String>();
         
@@ -83,13 +83,13 @@ public class No42888_openChat {
 	public static String[] solutionArr(String[] record) {
         String[] answer = {};
         int size = record.length;
-        // record�� �ܾ� / �������̵� / �г��� ���� �����ϱ� ���� �迭
+        // record占쏙옙 占쌤억옙 / 占쏙옙占쏙옙占쏙옙占싱듸옙 / 占싻놂옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占싹깍옙 占쏙옙占쏙옙 占썼열
         String[][] table = new String[size][3];
-        // �� �迭�� uid������� �����ؼ� ������ �迭
+        // 占쏙옙 占썼열占쏙옙 uid占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占썼열
         String[][] SortedTable = new String[size][3];
         ArrayList<String> finAnswerArr = new ArrayList<String>();
         
-        // �ܾ� ���� ����
+        // 占쌤억옙 占쏙옙占쏙옙 占쏙옙占쏙옙
         for(int i = 0; i < size; i++) {
         	String[] temp = record[i].split(" ");
         	for(int j = 0; j < temp.length; j++) {
@@ -107,7 +107,7 @@ public class No42888_openChat {
             }
         });
         
-        // ���� ����� �г����� uid���� �����ϱ� ���� arraylist
+        // 占쏙옙占쏙옙 占쏙옙占쏙옙占� 占싻놂옙占쏙옙占쏙옙 uid占쏙옙占쏙옙 占쏙옙占쏙옙占싹깍옙 占쏙옙占쏙옙 arraylist
         ArrayList<Tuple> al = new ArrayList<Tuple>();
         
         String uid = table[0][1];
@@ -147,13 +147,13 @@ public class No42888_openChat {
 			String finAnswer = "";
 
         	if(table[idx][0].equals("Enter")) {
-        		finAnswer = "님이 들어왔습니다.";
+        		finAnswer = "�떂�씠 �뱾�뼱�솕�뒿�땲�떎.";
             	finAnswer = table[idx][2] + finAnswer;
             	finAnswerArr.add(finAnswer);
         		idx++;
         	}
         	else if(table[idx][0].equals("Leave")) {
-        		finAnswer = "님이 나갔습니다.";
+        		finAnswer = "�떂�씠 �굹媛붿뒿�땲�떎.";
             	finAnswer = table[idx][2] + finAnswer;
             	finAnswerArr.add(finAnswer);
         		idx++;
