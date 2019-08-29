@@ -74,10 +74,6 @@ public class No1829_kakaoColoringbook {
 						queue.offer(new Node(i, j));
 						visited[i][j] = true;
 						
-						if(maxSizeOfOneArea < area) {
-							maxSizeOfOneArea = area;
-		    			}
-						
 						area = 0;
 						numberOfArea++;
 					}
@@ -112,6 +108,8 @@ public class No1829_kakaoColoringbook {
 						visited[row][col - 1] = true;
 					}
 				}
+
+				maxSizeOfOneArea = Math.max(maxSizeOfOneArea, area);
 			}
 		}
 		
