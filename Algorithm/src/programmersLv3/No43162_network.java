@@ -24,14 +24,17 @@ public class No43162_network {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		int[][] computers1 = {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
-		System.out.println(">>>> " + solution(computers1.length, computers1));
+//		int[][] computers1 = {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
+//		System.out.println(">>>> " + solution(computers1.length, computers1));
+//		
+//		int[][] computers2 = {{1, 1, 0}, {1, 1, 1}, {0, 1, 1}};
+//		System.out.println(">>>> " + solution(computers2.length, computers2));
+//		
+//		int[][] computers3 = {{1,0,0,1}, {0,1,1,1}, {0,1,1,0}, {1,1,0,1}};
+//		System.out.println(">>>> " + solution(computers3.length, computers3) + "\n");
 		
-		int[][] computers2 = {{1, 1, 0}, {1, 1, 1}, {0, 1, 1}};
-		System.out.println(">>>> " + solution(computers2.length, computers2));
-		
-		int[][] computers3 = {{1,0,0,1}, {0,1,1,1}, {0,1,1,0}, {1,1,0,1}};
-		System.out.println(">>>> " + solution(computers3.length, computers3) + "\n");
+		int[][] computers4 = {{1,0,0,1,0,1,0}, {0,1,0,0,0,0,0}, {0,0,1,0,1,0,1}, {1,0,0,1,0,0,0}, {0,0,1,0,1,0,0}, {1,0,0,0,0,1,0}, {0,0,1,0,0,0,1}};
+		System.out.println(">>>> " + solution(computers4.length, computers4) + "\n");
 	}
 
 	static boolean[][] visit;
@@ -70,6 +73,25 @@ public class No43162_network {
         queue = new LinkedList<Node>();
         computer = computers;
         Node node;
+        Node[] nodes = new Node[n];
+        
+        for(int i = 0; i < n; i++) {
+        	nodes[i] = new Node(i, 0);
+        	nodes[i].adjacent.add();
+        }
+        
+        for(int i = 0; i < n; i++) {
+        	node = nodes[i];
+        	
+        	for(int j = i; j < n; j++) {
+        		if(computer[i][j] == 1) {
+        			Node conectedNode = nodes[j];
+        			if(node.adjacent.contains(conectedNode)) {
+        				node.adjacent.add(conectedNode);
+        			}
+        		}
+        	}
+        }
        
         for(int i = 0; i < n; i++) {
         	for(int j = 0; j < n; j++) {
@@ -86,7 +108,8 @@ public class No43162_network {
         				for(int k = 0; k < n; k++) {
         					if(k != i && computer[i][k] == 1) {
         						conect = true;
-        					} else if(k != i && computer[k][i] == 1) {
+        					}
+        					else if(k != i && computer[k][i] == 1) {
         						conect = true;
         					}
         				}
@@ -104,10 +127,7 @@ public class No43162_network {
         		
         		while(!queue.isEmpty()) {
         			node = queue.poll();
-        			int row = node.x;
-        			int col = node.y;
-        			
-        			compareAround(row, col, n);
+        			compareAround(node.x, node.y, n);
         		}
         	}
         }
