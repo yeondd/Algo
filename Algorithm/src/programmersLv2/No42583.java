@@ -33,42 +33,45 @@ class solutionClass {
 	public int solution(int bridge_length, int weight, int[] truck_weights) {
         int answer = 0;
         Queue<Truck> queue = new LinkedList<Truck>();
-        ArrayList<Truck> waiting = new ArrayList<Truck>();
-		Iterator<Truck> iter = waiting.iterator();
+        Queue<Truck> waiting = new LinkedList<Truck>();
         int weightSum = 0;
-        int watingIdx = 0;
         
         for(int i: truck_weights) {
         	Truck t = new Truck(i);
         	queue.offer(t);
         }
         
-        while(!queue.isEmpty()) {
-        	answer++;
-        	
-        	// 다리 위에 더 올릴 수 없으면 기존 대기줄에 있는 트럭 이동
-        	if(weightSum + queue.peek().weight > weight) {
-        		while (iter.hasNext()) {
-        		    Truck t = iter.next();
-        		    
-        		    // 트럭이 끝까지 가지 않으면 한 칸 go
-        		    if(t.getPosition() < bridge_length) {
-            			t.going();
-        			}
-        		    // 트럭이 끝에 도달한 경우 대기줄에서 제거
-        		    else {
-        				waiting.remove(t);
-        			}
-        		}
-        	}
-        	else {
-        		Truck temp = queue.poll();
-        		waiting.add(temp);
-            	weightSum += temp.weight;
-        		watingIdx++;
-        	}
-        }
+        Truck init = queue.poll();
+        init.going();
+    	weightSum += init.weight;
+		waiting.offer(init);
+		answer++;
+		System.out.println("OFFER: " + init.weight);
         
+        while(!waiting.isEmpty()) {
+        	answer++;
+			System.out.println(answer);
+			
+			for(Truck t: waiting) {
+    			t.going();
+    		}
+			
+		    if(waiting.peek().getPosition() > bridge_length) {
+		    	Truck temp = waiting.poll();
+		    	weightSum -= temp.weight;
+		    	System.out.println("POLL: " + temp.weight);
+			}
+    		
+        	if(!queue.isEmpty() && weightSum + queue.peek().weight <= weight) {
+        		Truck temp = queue.poll();
+        		temp.going();
+            	weightSum += temp.weight;
+        		waiting.offer(temp);
+    			System.out.println("OFFER: " + temp.weight);
+        	}
+
+			System.out.println();
+        }
         return answer;
     }
 }
@@ -76,9 +79,9 @@ public class No42583 {
 	
 	public static void main(String[] args) {
 		solutionClass sc = new solutionClass();
-		int bridge_length = 2;
-		int weight = 10;
-		int[] truck_weights = {7,4,5,6};
+		int bridge_length = 100;
+		int weight = 100;
+		int[] truck_weights = {10,10,10,10,10,10,10,10,10,10};
 		
 		System.out.println(sc.solution(bridge_length, weight, truck_weights));
 	}
