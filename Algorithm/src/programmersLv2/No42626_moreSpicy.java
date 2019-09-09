@@ -29,7 +29,7 @@ public class No42626_moreSpicy {
         while(min < K && minHeap.size() > 1) {
         	int mix = minHeap.poll() + (minHeap.poll() * 2);
 
-        	if(minHeap.size() == 2) {
+        	if(minHeap.size() == 0) {
         		if(mix < K) {
         			return -1;
         		}
