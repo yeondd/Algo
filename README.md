@@ -6,3 +6,6 @@ This repository for Algorithm study
 * level 2: -ing
   - complete - 9/38
 * kakao: -ing
+
+
+* 2020 kakao coding test
