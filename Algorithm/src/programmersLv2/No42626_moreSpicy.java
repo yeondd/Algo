@@ -18,7 +18,7 @@ public class No42626_moreSpicy {
 	// 섞은 음식의 스코빌 지수 = 가장 맵지 않은 음식의 스코빌 지수 + (두 번째로 맵지 않은 음식의 스코빌 지수 * 2)
 	public static int solution(int[] scoville, int K) {
         int answer = 0;
-        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(scoville.length);
         
         for(int i: scoville) {
         	minHeap.offer(i);
@@ -26,9 +26,14 @@ public class No42626_moreSpicy {
         
         int min = minHeap.peek();
         
-        while(min < K && minHeap.size() >= 2) {
+        while(min < K && minHeap.size() > 1) {
         	int mix = minHeap.poll() + (minHeap.poll() * 2);
 
+        	if(minHeap.size() == 2) {
+        		if(mix < K) {
+        			return -1;
+        		}
+        	}
     		minHeap.offer(mix);
     		min = minHeap.peek();
     		answer++;
