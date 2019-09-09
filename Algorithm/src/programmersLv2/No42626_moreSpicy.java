@@ -19,18 +19,19 @@ public class No42626_moreSpicy {
 	public static int solution(int[] scoville, int K) {
         int answer = 0;
         PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+        
         for(int i: scoville) {
         	minHeap.offer(i);
         }
         
-        while(true) {
-        	if(minHeap.peek() < K) {
-        		int min = minHeap.poll() + (minHeap.poll() * 2);
-        		minHeap.offer(min);
-        		answer++;
-        	} else {
-        		break;
-        	}
+        int min = minHeap.peek();
+        
+        while(min < K && minHeap.size() >= 2) {
+        	int mix = minHeap.poll() + (minHeap.poll() * 2);
+
+    		minHeap.offer(mix);
+    		min = minHeap.peek();
+    		answer++;
         }
         
         return answer;
