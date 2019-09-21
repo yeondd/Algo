@@ -4,17 +4,25 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /*
- * ³×Æ®¿öÅ©
+ * ï¿½ï¿½Æ®ï¿½ï¿½Å©
  * https://programmers.co.kr/learn/courses/30/lessons/43162
  */
 
 class Node {
+	int v;
 	int x;
 	int y;
 	LinkedList<Node> adjacent = new LinkedList<Node>();
 	
 	public Node() {}
 	public Node(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+
+	public Node(int v, int x, int y) {
+		this.v = v;
 		this.x = x;
 		this.y = y;
 	}
